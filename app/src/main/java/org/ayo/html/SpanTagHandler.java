@@ -35,6 +35,5 @@ public class SpanTagHandler implements HtmlTagHandler.TagHandler {
                 output.setSpan(new ForegroundColorSpan(Color.parseColor(fontColor)), 0, output.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }//~~over if
-
     }
 }
