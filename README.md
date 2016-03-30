@@ -10,6 +10,9 @@
 1 自定义标签：
 
 ```java
+/**
+*  解析<span style=\"{color:#e60012}\">哈哈哈</span>
+*/
 public class SpanTagHandler implements HtmlTagHandler.TagHandler {
 
     private String fontColor = "";
@@ -21,18 +24,16 @@ public class SpanTagHandler implements HtmlTagHandler.TagHandler {
             if(open){
                 //开标签，output是空（sax还没读到），attrs有值
                 for(int i = 0; i < attrs.getLength(); i++){
-                    Log.i("22222", "====" + attrs.getLocalName(i) + ": " + attrs.getQName(i) + ": " + attrs.getValue(i));
                     if(attrs.getLocalName(i).equals("style")){
                         String style = attrs.getValue(i); //{color:#e60012}
                         fontColor = style.replace("{", "").replace("}", "").replace("color", "").replace(":", "");
-                        Log.i("22222", "fontColor=" + fontColor);
                     }
                 }
             }else{
                 //闭标签，output有值了，attrs没值
                 output.setSpan(new ForegroundColorSpan(Color.parseColor(fontColor)), 0, output.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
-        }//~~over if
+        }
     }
 }
 ```
@@ -61,3 +62,13 @@ handleStartTag(String tag, Attributes attributes)
 
 所以HtmlTagHandler就干了两件事，一是拷出源码，二是更改接口，去掉XmlReader，换成Attributes
 
+4 问题
+
+如果直接解析：
+```java
+String content = "呵呵呵<span style=\"{color:#e60012}\">哈哈哈</span>嘿嘿嘿";
+```
+会报错，需要处理成纯xml格式
+```java
+content = "<html><body>" + content + "</body></html>";
+```

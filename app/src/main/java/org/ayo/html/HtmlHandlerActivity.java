@@ -18,13 +18,14 @@ public class HtmlHandlerActivity extends Activity {
         TextView tv_1 = (TextView) findViewById(R.id.tv_1);
         TextView tv_2 = (TextView) findViewById(R.id.tv_2);
 
-        String content = "<span style=\"{color:#e60012}\">哈哈哈</span>";
+        String content = "呵呵呵<span style=\"{color:#e60012}\">哈哈哈</span>嘿嘿嘿";
 
         //普通TextView
         tv_1.setText(content);
 
         //使用自定义标签
         //content = "<h1>dddd</h1>";
+        content = "<html><body>" + content + "</body></html>";
         Spanned s = HtmlTagHandler.fromHtml(content, null, new SpanTagHandler());
         tv_2.setText(s);
     }

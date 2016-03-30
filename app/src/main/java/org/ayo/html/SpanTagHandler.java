@@ -15,6 +15,8 @@ import org.xml.sax.Attributes;
 public class SpanTagHandler implements HtmlTagHandler.TagHandler {
 
     private String fontColor = "";
+    private int startIndex = 0;
+    private int endIndex = 0;
 
     @Override
     public void handleTag(boolean open, String tag, Editable output, Attributes attrs) {
@@ -23,16 +25,16 @@ public class SpanTagHandler implements HtmlTagHandler.TagHandler {
             if(open){
                 //开标签，output是空（sax还没读到），attrs有值
                 for(int i = 0; i < attrs.getLength(); i++){
-                    Log.i("22222", "====" + attrs.getLocalName(i) + ": " + attrs.getQName(i) + ": " + attrs.getValue(i));
                     if(attrs.getLocalName(i).equals("style")){
                         String style = attrs.getValue(i); //{color:#e60012}
                         fontColor = style.replace("{", "").replace("}", "").replace("color", "").replace(":", "");
-                        Log.i("22222", "fontColor=" + fontColor);
                     }
                 }
+                startIndex = output.length();
             }else{
                 //闭标签，output有值了，attrs没值
-                output.setSpan(new ForegroundColorSpan(Color.parseColor(fontColor)), 0, output.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                endIndex = output.length();
+                output.setSpan(new ForegroundColorSpan(Color.parseColor(fontColor)), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }//~~over if
     }

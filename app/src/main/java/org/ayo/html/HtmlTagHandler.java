@@ -94,15 +94,6 @@ public class HtmlTagHandler {
                 e.printStackTrace();
             }
 
-
-//            try {
-//                mReader.parse(new InputSource(new StringReader(mSource)));
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            } catch (SAXException e) {
-//                throw new RuntimeException(e);
-//            }
-
             // Fix flags and range for paragraph-type markup.
             Object[] obj = mSpannableStringBuilder.getSpans(0, mSpannableStringBuilder.length(), ParagraphStyle.class);
             for (int i = 0; i < obj.length; i++) {
