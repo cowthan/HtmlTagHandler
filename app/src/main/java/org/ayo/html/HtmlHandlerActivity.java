@@ -1,14 +1,15 @@
 package org.ayo.html;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Spanned;
 import android.widget.TextView;
 
+import org.ayo.core.activity.AyoActivity;
+
 /**
  * Created by Administrator on 2016/3/29.
  */
-public class HtmlHandlerActivity extends Activity {
+public class HtmlHandlerActivity extends AyoActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class HtmlHandlerActivity extends Activity {
         content = "<html><body>" + content + "</body></html>";
         Spanned s = HtmlTagHandler.fromHtml(content, null, new SpanTagHandler());
         tv_2.setText(s);
+
     }
 }
 
